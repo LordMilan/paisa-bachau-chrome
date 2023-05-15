@@ -4,12 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
   var daraz_product = document.getElementById('daraz_product');
   var sastodeal_product = document.getElementById('sastodeal_product');
 
-
+  const priceRange = document.getElementById("priceRange");
+  const priceRangeValue = document.getElementById("priceRangeValue");
+  
+  priceRange.addEventListener("input", () => {
+    const minValue = priceRange.min;
+    const maxValue = priceRange.max;
+    const value = priceRange.value;
+    priceRangeValue.innerText = `${minValue} - ${maxValue}`;
+  });
+  
   form.addEventListener('submit', function(event) {
     event.preventDefault(); // prevent form submission
-    
-    //For Daraz
 
+    //For Daraz
     // send POST request to localhost:5000/search with search keyword as the request body
     fetch('http://localhost:5000/api/daraz', {
       method: 'POST',
@@ -51,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     //For Sastodeal
-
     // send POST request to localhost:5000/search with search keyword as the request body
     fetch('http://localhost:5000/api/sastodeal', {
       method: 'POST',
@@ -93,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     //For Hamrobazar
-
     // send POST request to localhost:5000/search with search keyword as the request body
     fetch('http://localhost:5000/api/hamrobazar', {
       method: 'POST',
@@ -133,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => {
       console.error(error);
       // hamrobazar_product.textContent = data;
-
       hamrobazar_product.textContent = 'An error occurred while retrieving the product information';
     });
   });
