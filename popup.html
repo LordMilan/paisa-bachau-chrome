@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Input Extension</title>
-    <script src="popup.js"></script>
-    <link rel="stylesheet" type="text/css" href="./style.css">
-  </head>
-  <body>
-    <form id="myForm">
-      <label for="myInput">Product Name</label>
-      <input type="text" id="myInput" name="myInput" required>
-      <label for="minPrice">Minimum Price:</label>
-      <input type="text" id="minPrice" name="minPrice" required>
-      <label for="maxPrice">Maximum Price:</label>
-      <input type="text" id="maxPrice" name="maxPrice" required>
-      <button type="submit">Submit</button>
-    </form>
-    <p id="daraz_product"></p>
 
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Paisa Bachau</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <script src="popup.js"></script>
+</head>
+
+<body>
+   <h1>Paisa Bachau</h1>
+   <div id="wrapper">
+    <form id="myForm">
+      <div class="input-row">
+        <label for="myInput">Product Name:</label>
+        <input type="text" id="myInput" name="myInput" required>
+      </div>
+      <div class="input-row">
+        <label for="minPrice">Minimum Price:</label>
+        <input type="text" id="minPrice" name="minPrice" required>
+      </div><!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Paisa Bachau</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <script src="popup.js"></script>
+</head>
+
+<body>
+   <h1>Paisa Bachau</h1>
+   <div id="wrapper">
+    <form id="myForm">
+      <div class="input-row">
+        <label for="myInput">Product Name:</label>
+        <input type="text" id="myInput" name="myInput" required>
+      </div>
+      <div class="input-row">
+        <label for="minPrice">Minimum Price:</label>
+        <input type="text" id="minPrice" name="minPrice" required>
+      </div>
+      <div class="input-row">
+        <label for="maxPrice">Maximum Price:</label>
+        <input type="text" id="maxPrice" name="maxPrice" required>
+      </div>
+      <div class="input-row">
+        <button type="submit">Submit</button>
+      </div>
+  
+      <div class="input-row">
+        <label for="sortSelect">Sort by Price:</label>
+        <select id="sortSelect">
+          <option value="lowToHigh">Low to High</option>
+          <option value="highToLow">High to Low</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  
+ <p id="daraz_product"></p>
+
+</body>
+
 </html>

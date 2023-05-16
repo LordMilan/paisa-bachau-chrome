@@ -1,79 +1,160 @@
-.product-table {
+body {
+    background-color: #f8f8f8;
     font-family: Arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+  }
+  .product-table {
+font-family: Arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
 }
 
 .product-table td,
 .product-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
+border: 1px solid #ddd;
+padding: 8px;
 }
 
 .product-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+background-color: #f2f2f2;
 }
 
 .product-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: left;
+background-color: #4CAF50;
+color: white;
 }
 
 .product-name a {
-    color: #333;
-    text-decoration: none;
+color: #333;
+text-decoration: none;
 }
 
 .product-name a:hover {
-    text-decoration: underline;
+text-decoration: underline;
+}
+
+#wrapper {
+  width: auto;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    max-width: 600px;
-    margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
 }
 
+.input-row {
+  margin-bottom: 10px;
+}
+
+.input-row label {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.input-row input[type="text"],
+.input-row select {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-row button {
+  padding: 5px 10px;
+}
+
+
 label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-right: 10px;
+font-size: 16px;
+font-weight: bold;
+margin-right: 10px;
 }
 
 input[type="text"] {
-    padding: 8px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    flex: 1 1 200px;
+padding: 8px;
+border: 2px solid #ccc;
+border-radius: 4px;
+flex: 1 1 200px;
 }
 
 button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 4px;
+padding: 10px 20px;
+margin-left: 10px;
+cursor: pointer;
+transition: all 0.3s ease-in-out;
 }
 
 button[type="submit"]:hover {
-    background-color: #3e8e41;
+background-color: #3e8e41;
 }
 
 body {
-    width: auto;
+width: auto;
 }
 
 #myForm button:hover {
-    background-color: #ff9900;
-    color: white;
-    transition: all 0.3s ease;
+background-color: #ff9900;
+color: white;
+transition: all 0.3s ease;
+}
+
+  
+  h1 {
+    text-align: center;
+    color: #4285f4;
+    margin-top: 10;
+  }
+  
+  form {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+
+  #sortSelect {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
   }
