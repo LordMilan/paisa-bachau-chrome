@@ -115,10 +115,22 @@ transition: all 0.3s ease;
 
 h1 {
   text-align: center;
-  color: #4285f4;
+  color: #5c3dce;
   margin-top: 10;
 }
 
+.logo {
+  float: left;
+  margin-right: -30px;
+  width: 40px; /* Adjust the width as desired */
+  height: auto; /* Maintain aspect ratio */ 
+}
+
+p1 {
+  text-align: center;
+  color: #0ba2b6;
+  margin-top: 10;
+}
 form {
   text-align: center;
   margin-top: 20px;
@@ -158,3 +170,4 @@ button[type="submit"] {
   border-radius: 4px;
   width: 200px;
 }
+
