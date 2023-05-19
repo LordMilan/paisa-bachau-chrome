@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var minprice = document.getElementById('minPrice');
   var maxprice = document.getElementById('maxPrice');
   var sortButton = document.getElementById('sortButton'); // Add this line to get the sort button element
+  var sortSelect = document.getElementById('sortSelect'); // Add this line to get the sort select element
+  var daraz_product = document.getElementById('daraz_product'); // Add this line to get the product table element
 
   form.addEventListener('submit', function (event) {
     event.preventDefault(); // prevent form submission
 
-    //For Daraz
     // send POST request to localhost:5000/search with search keyword as the request body
     fetch('https://api.milanmahat.com.np/api/data', {
       method: 'POST',
@@ -47,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
           });
 
           data.sort((a, b) => (typeof b.price === 'number' ? b.price : Infinity) - (typeof a.price === 'number' ? a.price : Infinity));
-
         }
 
         // Function to generate HTML for a product
@@ -62,12 +62,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
           return `<tr>
           <td class="product-image"><img src="${productImage}" alt="${productName}" style="width: 100px; height: 100px;"></td>
-          <td class="product-name"><a href="${productUrl}" target="_blank">${productName}</a></td>
+          <td class="product-name"><a href="${productUrl}" target="popup" data-product-url="${productUrl}">${productName}</a></td>
           <td class="product-price">Rs ${price.toLocaleString()}</td>
           <td class="product-discount">${discount}</td>
           <td class="product-rating">${ratingScore}</td>
           <td class="product-vendor">${vendor}</td>
         </tr>`;
+        }
+
+        // Function to open the popup window
+        function openPopup(event) {
+          event.preventDefault();
+          const productUrl = event.target.dataset.productUrl;
+          window.open(productUrl, 'popup', 'width=600,height=600');
         }
 
         // Sort the data array based on the selected option
@@ -105,6 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
           </tr>
           ${productsHTML}
         </table>`;
+
+          // Add event listeners to the product links
+          const productLinks = daraz_product.querySelectorAll('a[data-product-url]');
+          productLinks.forEach(link => {
+            link.addEventListener('click', openPopup);
+          });
         }
 
         // Add change event listener to the sort select element
