@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Input Extension",
+  "name": "Paisa Bachau - Beta",
   "version": "1.0",
-  "description": "A simple extension that displays user input in popup.",
+  "description": "Get best deals from Daraz, Hamrobazzar and Sastodeal",
   "icons": {
     "128": "logo_128.png"
   },
   "action": {
-  "default_popup": "popup.html"
+    "default_popup": "popup.html"
+    }
   }
-}
