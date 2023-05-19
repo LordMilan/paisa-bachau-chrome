@@ -52,12 +52,13 @@ margin-top: 20px;
 
 .input-row {
 margin-bottom: 10px;
+align-items: center;
 }
 
 .input-row label {
 display: inline-block;
 width: 150px;
-text-align: right;
+text-align: center;
 margin-right: 10px;
 }
 
