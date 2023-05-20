@@ -2,10 +2,14 @@ body {
   background-color: #f8f8f8;
   font-family: Arial, sans-serif;
 }
+
+
 .product-table {
 font-family: Arial, sans-serif;
 border-collapse: collapse;
-width: 100%;
+width: 100%;  
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .product-table td,
@@ -42,7 +46,7 @@ padding: 20px;
 background-color: #fff;
 border: 1px solid #ddd;
 border-radius: 10px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 form {
@@ -60,6 +64,8 @@ display: inline-block;
 width: 150px;
 text-align: center;
 margin-right: 10px;
+color: #127d3d;
+
 }
 
 .input-row input[type="text"],
@@ -97,6 +103,8 @@ padding: 10px 20px;
 margin-left: 10px;
 cursor: pointer;
 transition: all 0.3s ease-in-out;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 button[type="submit"]:hover {
@@ -122,6 +130,7 @@ transition: all 0.3s ease;
   text-align: center;
   color: #5c3dce;
   margin-top: 0px;
+  
 }
 
 #header::before,
@@ -141,6 +150,7 @@ transition: all 0.3s ease;
 #header::after {
   bottom: 0;
 }
+
 
 @keyframes shakeAnimation {
   0% { transform: translateY(0); }
@@ -163,6 +173,8 @@ transition: all 0.3s ease;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards; /* Stop at the end state */
   display: inline-block; /* Ensure the span takes only necessary width */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 
@@ -177,6 +189,8 @@ p1 {
   text-align: center;
   color: #a81793;
   margin-top: 10;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 form {
   text-align: center;
@@ -197,6 +211,7 @@ input[type="text"] {
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
+  color: #010f01;
 }
 
 button[type="submit"] {
