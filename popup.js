@@ -6,9 +6,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var sortButton = document.getElementById('sortButton'); // Add this line to get the sort button element
   var sortSelect = document.getElementById('sortSelect'); // Add this line to get the sort select element
   var daraz_product = document.getElementById('daraz_product'); // Add this line to get the product table element
+  var loadingDiv = document.getElementById('loadingDiv'); // Add this line to get the loading div element
 
   form.addEventListener('submit', function (event) {
     event.preventDefault(); // prevent form submission
+
+    // Show loading div
+    loadingDiv.style.display = 'block';
 
     // send POST request to localhost:5000/search with search keyword as the request body
     fetch('https://api.milanmahat.com.np/api/data', {
@@ -118,6 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
           productLinks.forEach(link => {
             link.addEventListener('click', openPopup);
           });
+
+          // Hide loading div
+          loadingDiv.style.display = 'none';
         }
 
         // Add change event listener to the sort select element
@@ -132,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => {
         console.error(error);
         daraz_product.textContent = 'An error occurred while retrieving the product information';
+        // Hide loading div
+        loadingDiv.style.display = 'none';
       });
   });
 });
