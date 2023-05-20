@@ -114,11 +114,57 @@ transition: all 0.3s ease;
 }
 
 
-h1 {
+#header {
+  position: relative;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
   color: #5c3dce;
-  margin-top: 10;
+  margin-top: 0px;
 }
+
+#header::before,
+#header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgb(180, 10, 129);
+}
+
+#header::before {
+  top: 0;
+}
+
+#header::after {
+  bottom: 0;
+}
+
+@keyframes shakeAnimation {
+  0% { transform: translateY(0); }
+  10% { transform: translateY(-4px); }
+  20% { transform: translateY(4px); }
+  30% { transform: translateY(-3px); }
+  40% { transform: translateY(3px); }
+  50% { transform: translateY(-2px); }
+  60% { transform: translateY(2px); }
+  70% { transform: translateY(-1px); }
+  80% { transform: translateY(1px); }
+  90% { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+
+
+.animated-text {
+  animation-name: shakeAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards; /* Stop at the end state */
+  display: inline-block; /* Ensure the span takes only necessary width */
+}
+
 
 .logo {
   float: left;
@@ -129,7 +175,7 @@ h1 {
 
 p1 {
   text-align: center;
-  color: #0ba2b6;
+  color: #a81793;
   margin-top: 10;
 }
 form {
