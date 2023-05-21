@@ -38,6 +38,11 @@ text-decoration: none;
 text-decoration: underline;
 }
 
+.active {
+  color: #f10808; /* Set the desired color for the active pagination link */
+
+}
+
 #wrapper {
 width: auto;
 margin: auto;
