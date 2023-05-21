@@ -12,9 +12,11 @@
   <h1 id="header">
     <img src="logo_128.png" alt="Logo" class="logo">
     <span class="animated-text">Paisa Bachau</span>
-  </h1>  
-   <center><p1>Get best deals and save your time & money !</p1></center><br>
-   <div id="wrapper">
+  </h1>
+  <center>
+    <p1>Get best deals and save your time & money !</p1>
+  </center><br>
+  <div id="wrapper">
     <form id="myForm">
       <div class="input-row">
         <label for="myInput">Product Name:</label>
@@ -27,26 +29,36 @@
       <div class="input-row">
         <label for="maxPrice">Maximum Price:</label>
         <input type="text" id="maxPrice" name="maxPrice" required>
-      </div> 
+      </div>
       <div class="input-row">
         <button type="submit">Submit</button>
       </div>
+      <label for="sortSelect">Sort by:</label>
+
       <div class="input-row">
-        <label for="sortSelect">Sort by:</label>
         <select id="sortSelect">
           <option value="lowToHigh">Price</option>
           <option value="lowToHigh">Low to High</option>
           <option value="highToLow">High to Low</option>
+        </select>
+        <br></br>
+        <select id="vendorSortSelect">
+          <option value="all">Vendor</option>
+          <option value="all">All</option>
+          <option value="daraz">Daraz</option>
+          <option value="sastodeal">SastoDeal</option>
+          <option value="hamrobazzar">HamroBazzar</option>
         </select>
       </div>
     </form>
   </div>
   <div id="loadingDiv">
     <img src="loading.gif" alt="Loading">
-  </br><span>Searching for the best deals for you...</span>
+    </br><span>Searching for the best deals for you...</span>
   </div>
- <p id="daraz_product"></p>
 
+  <p id="daraz_product"></p>
+  <center><div id="pagination"></div></center>
 </body>
 
 </html>

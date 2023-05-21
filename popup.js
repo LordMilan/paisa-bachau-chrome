@@ -3,18 +3,21 @@ document.addEventListener('DOMContentLoaded', function () {
   var input = document.getElementById('myInput');
   var minprice = document.getElementById('minPrice');
   var maxprice = document.getElementById('maxPrice');
-  var sortButton = document.getElementById('sortButton'); // Add this line to get the sort button element
-  var sortSelect = document.getElementById('sortSelect'); // Add this line to get the sort select element
-  var daraz_product = document.getElementById('daraz_product'); // Add this line to get the product table element
-  var loadingDiv = document.getElementById('loadingDiv'); // Add this line to get the loading div element
+  var sortButton = document.getElementById('sortButton');
+  var sortSelect = document.getElementById('sortSelect');
+  var vendorSortSelect = document.getElementById('vendorSortSelect');
+  var daraz_product = document.getElementById('daraz_product');
+  var loadingDiv = document.getElementById('loadingDiv');
+  var pagination = document.getElementById('pagination');
+  var currentPage = 1;
+  var totalPages = 1;
+  const productsPerPage = 10;
 
   form.addEventListener('submit', function (event) {
-    event.preventDefault(); // prevent form submission
+    event.preventDefault();
 
-    // Show loading div
     loadingDiv.style.display = 'block';
 
-    // send POST request to localhost:5000/search with search keyword as the request body
     fetch('https://api.milanmahat.com.np/api/data', {
       method: 'POST',
       headers: {
@@ -28,33 +31,56 @@ document.addEventListener('DOMContentLoaded', function () {
     })
       .then(response => response.json())
       .then(data => {
-        let productsHTML = ''; // Variable to store the HTML for all products
+        const olddata = data.slice(); // Create a copy of the data array
+        const vendorSortOption = vendorSortSelect.value;
+        if (vendorSortOption === "daraz") {
+          sortByVendor("daraz");
+        } else if (vendorSortOption === "sastodeal") {
+          sortByVendor("sastodeal");
+        } else if (vendorSortOption === "hamrobazzar") {
+          sortByVendor("hamrobazzar");
+        }
+        else {
+          data = olddata
+        }
 
-        // Function to sort the data array by price
+        const selectedOption = sortSelect.value;
+        if (selectedOption === "lowToHigh") {
+          sortByPriceLowToHigh();
+        } else if (selectedOption === "highToLow") {
+          sortByPriceHighToLow();
+        } else {
+          sortByPriceLowToHigh();
+        }
+
         function sortByPriceLowToHigh() {
-          console.log('Sorting by price...');
-          data.forEach(product => {
+          console.log('Sorting by price Low to high...');
+          olddata.forEach(product => {
             let price = String(product.price);
             price = price.replace(/[रूRs]/g, '').replace(/,/g, '').trim();
             product.price = parseFloat(price) || "N/A";
           });
 
-          data.sort((a, b) => (typeof a.price === 'number' ? a.price : Infinity) - (typeof b.price === 'number' ? b.price : Infinity));
+          olddata.sort((a, b) => (typeof a.price === 'number' ? a.price : Infinity) - (typeof b.price === 'number' ? b.price : Infinity));
         }
 
-        // Function to sort the data array by price
         function sortByPriceHighToLow() {
-          console.log('Sorting by price...');
-          data.forEach(product => {
+          console.log('Sorting by price High To Low...');
+          olddata.forEach(product => {
             let price = String(product.price);
             price = price.replace(/[रूRs]/g, '').replace(/,/g, '').trim();
             product.price = parseFloat(price) || "N/A";
           });
 
-          data.sort((a, b) => (typeof b.price === 'number' ? b.price : Infinity) - (typeof a.price === 'number' ? a.price : Infinity));
+          olddata.sort((a, b) => (typeof b.price === 'number' ? b.price : Infinity) - (typeof a.price === 'number' ? a.price : Infinity));
         }
 
-        // Function to generate HTML for a product
+        function sortByVendor(vendor) {
+          console.log(`Sorting by ${vendor}...`);
+          data = olddata.filter(product => product.vendor === vendor);
+        }
+
+
         function generateProductHTML(product) {
           const productImage = product.image || "N/A";
           const productName = product.name || "N/A";
@@ -65,23 +91,102 @@ document.addEventListener('DOMContentLoaded', function () {
           const vendor = product.vendor || "N/A";
 
           return `<tr>
-          <td class="product-image"><img src="${productImage}" alt="${productName}" style="width: 100px; height: 100px;"></td>
-          <td class="product-name"><a href="${productUrl}" target="popup" data-product-url="${productUrl}">${productName}</a></td>
-          <td class="product-price">Rs ${price.toLocaleString()}</td>
-          <td class="product-discount">${discount}</td>
-          <td class="product-rating">${ratingScore}</td>
-          <td class="product-vendor">${vendor}</td>
-        </tr>`;
+            <td class="product-image"><img src="${productImage}" alt="${productName}" style="width: 100px; height: 100px;"></td>
+            <td class="product-name"><a href="${productUrl}" target="popup" data-product-url="${productUrl}">${productName}</a></td>
+            <td class="product-price">Rs ${price.toLocaleString()}</td>
+            <td class="product-discount">${discount}</td>
+            <td class="product-rating">${ratingScore}</td>
+            <td class="product-vendor">${vendor}</td>
+          </tr>`;
         }
 
-        // Function to open the popup window
         function openPopup(event) {
           event.preventDefault();
           const productUrl = event.target.dataset.productUrl;
           window.open(productUrl, 'popup', 'width=600,height=600');
         }
 
-        // Sort the data array based on the selected option
+        function displayProducts(pageNumber) {
+          currentPage = pageNumber;
+
+          const startIndex = (pageNumber - 1) * productsPerPage;
+          const endIndex = pageNumber * productsPerPage;
+          const productsSlice = data.slice(startIndex, endIndex);
+
+          let productsHTML = '';
+
+          for (const product of productsSlice) {
+            productsHTML += generateProductHTML(product);
+          }
+
+          daraz_product.innerHTML = `<table class="product-table">
+            <tr>
+              <th>Product Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Discount</th>
+              <th>Rating Score</th>
+              <th>Vendor</th>
+            </tr>
+            ${productsHTML}
+          </table>`;
+
+          generatePaginationLinks();
+
+          const productLinks = daraz_product.querySelectorAll('a[data-product-url]');
+          productLinks.forEach(link => {
+            link.addEventListener('click', openPopup);
+          });
+        }
+
+        function generatePaginationLinks() {
+          const linksHTML = [];
+          const maxDisplayedPages = 5; // Maximum number of pages to be displayed
+
+          let startPage = Math.max(1, currentPage - Math.floor(maxDisplayedPages / 2));
+          let endPage = startPage + maxDisplayedPages - 1;
+
+          if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(1, endPage - maxDisplayedPages + 1);
+          }
+
+          if (startPage > 1) {
+            linksHTML.push('<a href="#" data-page="1">1</a>');
+            if (startPage > 2) {
+              linksHTML.push('<span>...</span>');
+            }
+          }
+
+          for (let i = startPage; i <= endPage; i++) {
+            if (i === currentPage) {
+              linksHTML.push(`<a class="active" data-page="${i}" href="#">${i}</a>`);
+            } else {
+              linksHTML.push(`<a data-page="${i}" href="#">${i}</a>`);
+            }
+          }
+
+          if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+              linksHTML.push('<span>...</span>');
+            }
+            linksHTML.push(`<a href="#" data-page="${totalPages}">${totalPages}</a>`);
+          }
+
+          pagination.innerHTML = linksHTML.join(' ');
+
+          const paginationLinks = pagination.querySelectorAll('a[data-page]');
+          paginationLinks.forEach(link => {
+            link.addEventListener('click', handlePaginationClick);
+          });
+        }
+
+        function handlePaginationClick(event) {
+          event.preventDefault();
+          const pageNumber = parseInt(event.target.dataset.page);
+          displayProducts(pageNumber);
+        }
+
         function handleSort() {
           const selectedOption = sortSelect.value;
           if (selectedOption === "lowToHigh") {
@@ -90,56 +195,44 @@ document.addEventListener('DOMContentLoaded', function () {
             sortByPriceHighToLow();
           }
 
-          updateProductTable();
+          const vendorSortOption = vendorSortSelect.value;
+          if (vendorSortOption === "daraz") {
+            sortByVendor("daraz");
+          } else if (vendorSortOption === "sastodeal") {
+            sortByVendor("sastodeal");
+          } else if (vendorSortOption === "hamrobazzar") {
+            sortByVendor("hamrobazzar");
+          }
+          else {
+            data = olddata
+          }
+
+          displayProducts(currentPage);
+
+          // Update total pages based on the filtered data
+          totalPages = Math.ceil(data.length / productsPerPage);
+
+          // Reset to the first page
+          currentPage = 1;
+
+          displayProducts(currentPage);
+          generatePaginationLinks();
         }
 
-        // Generate HTML for all products
-        function updateProductTable() {
-          console.log('Updating product table...');
-          productsHTML = ''; // Reset productsHTML
+        const totalCount = data.length;
+        totalPages = Math.ceil(totalCount / productsPerPage);
 
-          // Iterate over each product in the sorted data array
-          data.forEach(product => {
-            const productHTML = generateProductHTML(product);
-            productsHTML += productHTML; // Append the HTML for the current product
-          });
+        displayProducts(currentPage);
 
-          // Update the daraz_product element with the generated HTML
-          daraz_product.innerHTML = `<table class="product-table">
-          <tr>
-            <th>Product Image</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Discount</th>
-            <th>Rating Score</th>
-            <th>Vendor</th>
-          </tr>
-          ${productsHTML}
-        </table>`;
-
-          // Add event listeners to the product links
-          const productLinks = daraz_product.querySelectorAll('a[data-product-url]');
-          productLinks.forEach(link => {
-            link.addEventListener('click', openPopup);
-          });
-
-          // Hide loading div
-          loadingDiv.style.display = 'none';
-        }
-
-        // Add change event listener to the sort select element
         sortSelect.addEventListener('change', handleSort);
+        vendorSortSelect.addEventListener('change', handleSort);
 
-        // Sort the data array initially
-        sortByPriceLowToHigh();
 
-        // Generate HTML for all products initially
-        updateProductTable();
+        loadingDiv.style.display = 'none';
       })
       .catch(error => {
         console.error(error);
         daraz_product.textContent = 'An error occurred while retrieving the product information';
-        // Hide loading div
         loadingDiv.style.display = 'none';
       });
   });
