@@ -13,9 +13,34 @@ document.addEventListener('DOMContentLoaded', function () {
   var totalPages = 1;
   const productsPerPage = 10;
 
+  //Dynamically adds commas to price input value
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  
+  // Event listener for input change on minPriceInput
+  minPriceInput.addEventListener('input', function (event) {
+    const formattedValue = formatNumber(event.target.value);
+    event.target.value = formattedValue;
+  });
+  
+  // Event listener for input change on maxPriceInput
+  maxPriceInput.addEventListener('input', function (event) {
+    const formattedValue = formatNumber(event.target.value);
+    event.target.value = formattedValue;
+  });
+  
+  // Function to format the number with comma separators
+  function formatNumber(number) {
+    return number.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }  
+
+
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-
+     //Removing commas from input values before submitting
+    const minPricenew = minprice.value.replace(/,/g, '');
+    const maxPricenew = maxprice.value.replace(/,/g, '');
     loadingDiv.style.display = 'block';
 
     fetch('https://api.milanmahat.com.np/api/data', {
@@ -25,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify({
         searchKeyword: input.value,
-        min_price: minprice.value,
-        max_price: maxprice.value
+        min_price: minPricenew,
+        max_price: maxPricenew
       })
     })
       .then(response => response.json())
